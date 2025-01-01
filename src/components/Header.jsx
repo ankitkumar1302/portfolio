@@ -4,10 +4,31 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      // Get all sections
+      const sections = ['home', 'about', 'projects', 'experience', 'contact'];
+      const sectionElements = sections.map(section => ({
+        id: section,
+        element: document.getElementById(section),
+      }));
+
+      // Find which section is currently in view
+      const currentSection = sectionElements.find(({ element }) => {
+        if (!element) return false;
+        const rect = element.getBoundingClientRect();
+        // Consider a section "active" when its top is near the top of the viewport
+        // and its bottom is still below the middle of the viewport
+        return rect.top <= 100 && rect.bottom >= window.innerHeight / 2;
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection.id);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -66,11 +87,15 @@ const Header = () => {
                 <a
                   href={`#${item}`}
                   onClick={(e) => handleNavClick(e, item)}
-                  className="text-light/60 hover:text-primary transition-colors relative group font-mono text-sm"
+                  className={`text-light/60 hover:text-primary transition-colors relative group font-mono text-sm ${
+                    activeSection === item ? 'text-primary' : ''
+                  }`}
                 >
                   <span className="text-primary mr-1">0{index + 1}.</span>
                   <span className="capitalize">{item}</span>
-                  <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></div>
+                  <div className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === item ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></div>
                 </a>
               </motion.li>
             ))}
@@ -108,11 +133,15 @@ const Header = () => {
                         <a
                           href={`#${item}`}
                           onClick={(e) => handleNavClick(e, item)}
-                          className="text-light/80 hover:text-primary transition-colors relative group font-mono text-lg"
+                          className={`text-light/80 hover:text-primary transition-colors relative group font-mono text-lg ${
+                            activeSection === item ? 'text-primary' : ''
+                          }`}
                         >
                           <span className="text-primary mr-2">0{index + 1}.</span>
                           <span className="capitalize">{item}</span>
-                          <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></div>
+                          <div className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                            activeSection === item ? 'w-full' : 'w-0 group-hover:w-full'
+                          }`}></div>
                         </a>
                       </motion.li>
                     ))}
