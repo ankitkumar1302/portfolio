@@ -56,7 +56,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <ul className="hidden md:flex items-center space-x-8">
-            {['about', 'experience', 'projects', 'contact'].map((item, index) => (
+            {['about', 'projects', 'experience', 'contact'].map((item, index) => (
               <motion.li
                 key={item}
                 initial={{ opacity: 0, y: -20 }}
@@ -98,7 +98,7 @@ const Header = () => {
               >
                 <div className="flex items-center justify-center h-full">
                   <ul className="flex flex-col items-center space-y-8">
-                    {['about', 'experience', 'projects', 'contact'].map((item, index) => (
+                    {['about', 'projects', 'experience', 'contact'].map((item, index) => (
                       <motion.li
                         key={item}
                         initial={{ opacity: 0, y: 20 }}

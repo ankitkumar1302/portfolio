@@ -28,70 +28,104 @@ const Projects = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <h2 className="text-4xl font-bold mb-12 text-light relative inline-block">
+    <div className="max-w-6xl mx-auto" id="projects">
+      <motion.h2 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-4xl font-bold mb-12 text-light relative inline-block"
+      >
         <span className="text-primary">#</span> Projects
         <div className="absolute -bottom-2 left-0 w-1/2 h-1 bg-primary/20 rounded-full">
-          <div className="w-1/3 h-full bg-primary rounded-full" />
+          <motion.div 
+            className="w-1/3 h-full bg-primary rounded-full"
+            initial={{ width: 0 }}
+            whileInView={{ width: "33.333333%" }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          />
         </div>
-      </h2>
+      </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
         {projects.map((project, index) => (
           <motion.div
             key={project.title}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="group relative bg-dark-gray/30 rounded-lg overflow-hidden hover:bg-dark-gray/50 transition-colors duration-300"
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.2 }}
+            className="bg-dark-gray/30 rounded-xl overflow-hidden hover:bg-dark-gray/50 transition-all duration-300 transform hover:-translate-y-2 border border-light/5"
           >
             {/* Project Image */}
-            <div className="relative h-48 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-60 z-10"></div>
+            <div className="h-48 overflow-hidden">
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-dark-gray/90"></div>
             </div>
 
             {/* Project Content */}
             <div className="p-6">
               <div className="mb-4">
                 {project.featured && (
-                  <p className="text-primary font-mono text-sm mb-2">Featured Project</p>
+                  <motion.p 
+                    className="text-primary font-mono text-sm mb-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    Featured Project
+                  </motion.p>
                 )}
-                <h3 className="text-xl font-bold text-light group-hover:text-primary transition-colors">
+                <motion.h3 
+                  className="text-xl font-bold text-light mb-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
                   {project.title}
-                </h3>
+                </motion.h3>
+                <motion.p 
+                  className="text-light/70 text-sm mb-4 line-clamp-3"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  {project.description}
+                </motion.p>
               </div>
 
-              <p className="text-light/70 text-sm mb-4 line-clamp-3">
-                {project.description}
-              </p>
-
               <div className="flex flex-wrap gap-2 mb-6">
-                {project.tech.map((tech) => (
-                  <span
+                {project.tech.map((tech, techIndex) => (
+                  <motion.span
                     key={tech}
-                    className="px-2 py-1 text-xs text-primary bg-primary/10 rounded-full"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 + techIndex * 0.1 }}
+                    className="px-3 py-1 text-xs text-primary bg-primary/10 rounded-full"
                   >
                     {tech}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
 
-              <div className="flex justify-end">
+              <motion.div 
+                className="flex justify-end"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
                 <a
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-light/60 hover:text-primary transition-colors text-sm"
+                  className="inline-flex items-center text-light/60 hover:text-primary transition-all duration-300 text-sm group"
                 >
-                  <span className="mr-2">View Project</span>
+                  <span className="mr-2 group-hover:mr-3 transition-all">View Project</span>
                   <svg
-                    className="w-4 h-4"
+                    className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -104,11 +138,8 @@ const Projects = () => {
                     />
                   </svg>
                 </a>
-              </div>
+              </motion.div>
             </div>
-
-            {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
           </motion.div>
         ))}
       </div>
