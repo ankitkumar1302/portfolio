@@ -116,10 +116,7 @@ The site is deployed on Vercel. To deploy your own version:
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/yourusername/portfolio/issues).
+ 
 
 ## 📧 Contact
 
