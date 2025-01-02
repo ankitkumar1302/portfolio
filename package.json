@@ -6,7 +6,10 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.2.0",
+    "@mediapipe/tasks-vision": "^0.10.20",
     "@mui/material": "^5.15.10",
+    "@react-three/drei": "^9.120.5",
+    "@react-three/fiber": "^8.17.10",
     "aos": "^2.3.4",
     "cra-template": "1.2.0",
     "framer-motion": "^10.18.0",
@@ -15,6 +18,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0",
     "react-scripts": "5.0.1",
+    "three": "^0.172.0",
     "web-vitals": "^3.5.0"
   },
   "scripts": {

@@ -27,6 +27,10 @@ export default {
         'rotate': 'rotate 0.5s ease-out',
         'bounce-soft': 'bounceSoft 2s infinite',
         'pulse-soft': 'pulseSoft 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'morph': 'morph 8s ease-in-out infinite',
+        'float-slow': 'float 10s ease-in-out infinite',
+        'spin-slow': 'spin 15s linear infinite',
+        'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
       },
       keyframes: {
         gradient: {
@@ -75,10 +79,26 @@ export default {
           '0%, 100%': { opacity: 1 },
           '50%': { opacity: .7 },
         },
+        morph: {
+          '0%, 100%': { borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%' },
+          '50%': { borderRadius: '30% 60% 70% 40%/50% 60% 30% 60%' },
+        },
+        'float-slow': {
+          '0%, 100%': { transform: 'translateY(0) scale(1)' },
+          '50%': { transform: 'translateY(-20px) scale(1.05)' },
+        },
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-morphing': 'linear-gradient(45deg, var(--tw-gradient-stops))',
+      },
+      backdropFilter: {
+        'none': 'none',
+        'blur': 'blur(4px)',
+      },
+      transitionTimingFunction: {
+        'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
       },
     },
   },

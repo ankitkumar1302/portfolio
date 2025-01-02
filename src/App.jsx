@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -11,6 +11,8 @@ import Experience from './components/Experience';
 import GridBackground from './components/GridBackground';
 import CustomCursor from './components/CustomCursor';
 import DirectionalHint from './components/DirectionalHint';
+import ThreeBackground from './components/ThreeBackground';
+import PageTransition from './components/PageTransition';
 
 function App() {
   useEffect(() => {
@@ -29,117 +31,103 @@ function App() {
     };
   }, []);
 
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, 0.05, 0.01, 0.9]
-      }
-    }
-  };
-
   return (
-    <AnimatePresence>
-      <div className="relative min-h-screen bg-gradient-to-b from-secondary via-dark-gray to-secondary">
-        <CustomCursor />
-        <DirectionalHint />
-        <GridBackground />
-        
-        {/* Gradient Orbs */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full filter blur-[150px] animate-float" />
-          <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full filter blur-[150px] animate-float" style={{ animationDelay: '-2s' }} />
+    <AnimatePresence mode="wait">
+      <div className="relative min-h-screen bg-gradient-to-b from-secondary via-dark-gray to-secondary overflow-hidden">
+        {/* Background Elements (lowest z-index) */}
+        <div className="fixed inset-0 z-0">
+          <Suspense fallback={null}>
+            <ThreeBackground />
+          </Suspense>
+          <GridBackground />
+          
+          {/* Gradient Orbs */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full filter blur-[150px] animate-float" />
+            <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full filter blur-[150px] animate-float" style={{ animationDelay: '-2s' }} />
+          </div>
         </div>
 
+        {/* UI Elements (higher z-index) */}
+        <CustomCursor />
+        <DirectionalHint />
+        <Header />
+
+        {/* Main Content */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           className="relative z-10"
         >
-          <Header />
-          
           <main className="relative">
             {/* Hero Section */}
-            <motion.section
-              id="home"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              variants={sectionVariants}
-              className="min-h-screen flex items-center justify-center px-4 pt-20 pb-32"
-            >
-              <div className="container mx-auto max-w-6xl">
-                <Hero />
-              </div>
-            </motion.section>
+            <PageTransition>
+              <section
+                id="home"
+                className="min-h-screen flex items-center justify-center px-4 pt-20 pb-32"
+              >
+                <div className="container mx-auto max-w-6xl">
+                  <Hero />
+                </div>
+              </section>
+            </PageTransition>
             
             {/* Content Sections */}
             <div className="space-y-32">
               {/* About Section */}
-              <motion.section
-                id="about"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, margin: "-100px" }}
-                variants={sectionVariants}
-                className="min-h-screen flex items-center justify-center px-4 py-32 bg-gradient-to-b from-transparent via-dark-gray/30 to-transparent"
-              >
-                <div className="container mx-auto max-w-6xl" data-aos="fade-up">
-                  <About />
-                </div>
-              </motion.section>
+              <PageTransition>
+                <section
+                  id="about"
+                  className="min-h-screen flex items-center justify-center px-4 py-32 bg-gradient-to-b from-transparent via-dark-gray/30 to-transparent"
+                >
+                  <div className="container mx-auto max-w-6xl" data-aos="fade-up">
+                    <About />
+                  </div>
+                </section>
+              </PageTransition>
               
               {/* Projects Section */}
-              <motion.section
-                id="projects"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, margin: "-100px" }}
-                variants={sectionVariants}
-                className="min-h-screen flex items-center justify-center px-4 py-32"
-              >
-                <div className="container mx-auto max-w-7xl" data-aos="fade-up">
-                  <Projects />
-                </div>
-              </motion.section>
+              <PageTransition>
+                <section
+                  id="projects"
+                  className="min-h-screen flex items-center justify-center px-4 py-32"
+                >
+                  <div className="container mx-auto max-w-7xl" data-aos="fade-up">
+                    <Projects />
+                  </div>
+                </section>
+              </PageTransition>
               
               {/* Experience Section */}
-              <motion.section
-                id="experience"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, margin: "-100px" }}
-                variants={sectionVariants}
-                className="min-h-screen flex items-center justify-center px-4 py-32 bg-gradient-to-b from-transparent via-dark-gray/30 to-transparent"
-              >
-                <div className="container mx-auto max-w-6xl" data-aos="fade-up">
-                  <Experience />
-                </div>
-              </motion.section>
+              <PageTransition>
+                <section
+                  id="experience"
+                  className="min-h-screen flex items-center justify-center px-4 py-32 bg-gradient-to-b from-transparent via-dark-gray/30 to-transparent"
+                >
+                  <div className="container mx-auto max-w-6xl" data-aos="fade-up">
+                    <Experience />
+                  </div>
+                </section>
+              </PageTransition>
               
               {/* Contact Section */}
-              <motion.section
-                id="contact"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, margin: "-100px" }}
-                variants={sectionVariants}
-                className="min-h-screen flex items-center justify-center px-4 py-32 mb-20"
-              >
-                <div className="container mx-auto max-w-4xl" data-aos="fade-up">
-                  <Contact />
-                </div>
-              </motion.section>
+              <PageTransition>
+                <section
+                  id="contact"
+                  className="min-h-screen flex items-center justify-center px-4 py-32 mb-20"
+                >
+                  <div className="container mx-auto max-w-4xl" data-aos="fade-up">
+                    <Contact />
+                  </div>
+                </section>
+              </PageTransition>
             </div>
           </main>
 
           {/* Social Links */}
           <motion.div 
-            className="fixed left-12 bottom-0 hidden lg:block"
+            className="fixed left-12 bottom-0 hidden lg:block z-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
@@ -167,7 +155,7 @@ function App() {
 
           {/* Email Link */}
           <motion.div 
-            className="fixed right-12 bottom-0 hidden lg:block"
+            className="fixed right-12 bottom-0 hidden lg:block z-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
